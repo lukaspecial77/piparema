@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lan="en">
+<head>
+    <title>PIPAREMA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css\logIn.css" rel="stylesheet">
+    <meta charset="UTF-8">
+
+
+</head>
+<body>
+
+    <div id="container">
+
+        <div id="mainScreen">
+
+
+
+            <div id="title">
+                <p>Log in</p>
+            </div>
+
+
+            <div id="focus">
+
+                <div id="logo">
+                    <img src="photos\logo.png">
+                </div>
+
+                <div id="textField">
+
+                    <input id="email" placeholder="e-pasts" />
+                    <input id="password" placeholder="Parole" type="password"/>
+
+
+                </div>
+
+            </div>
+
+
+
+
+            <div id="bottomMenu">
+
+                <div id="return">
+
+                    <a href="index.html">Atpakaļ</a>
+
+                </div>
+
+                <div id="submit">
+
+                    <button id="logIn">Iesniegt</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCcZyZUZdicPyYkLzmXRLiN9JXyXMAu7I8",
+          authDomain: "piparemaprod.firebaseapp.com",
+          databaseURL: "https://piparemaprod-default-rtdb.firebaseio.com",
+          projectId: "piparemaprod",
+          storageBucket: "piparemaprod.appspot.com",
+          messagingSenderId: "384841641738",
+          appId: "1:384841641738:web:c336ee8b399afe721994f3"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database  = getDatabase(app);
+        const auth = getAuth();
+
+        logIn.addEventListener("click", (e) => {
+
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                const dt = new Date();
+
+                update(ref(database, 'users/' + user.uid),{
+                    last_login: dt,
+                    //name: name,
+                    //email: email
+                })
+                window.location.href = "over.html";
+                alert(`Lapni lūgts PIPAREMA!`)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+        })
+
+      </script>
+
+
+</body>
+</html>

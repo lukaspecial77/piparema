@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lan="en">
+<head>
+    <title>PIPAREMA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/new.css" rel="stylesheet">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="container">
+        <div id="mainScreen">
+            <div id="title">
+                <div id="titleLeft">
+                    <p>Preces meklēšana</p>
+                </div>
+                
+                <div id="return">
+                    <a href="over.html">Atpakaļ</a>
+                </div>
+                
+            </div>
+            <div id="focus1">
+                <div id="centerInput">
+                    <input id="searchProd" placeholder="Preces nosaukums">
+                    <button id="searchButton">Meklēt</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+
+
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const searchProd = document.getElementById('searchProd').value.trim().toLowerCase();
+            const product = products.find(p => p.productName.toLowerCase() === searchProd);
+
+            if (product) {
+
+                localStorage.setItem('searchedProduct', JSON.stringify(product));
+
+                window.location.href = 'inv.html';
+            } else {
+                alert('Tāda produkta nav!');
+            }
+        });
+    </script>
+
+</body>
+</html>
